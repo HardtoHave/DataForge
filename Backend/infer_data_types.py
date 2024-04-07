@@ -28,18 +28,17 @@ def infer_and_convert_data_types(df):
 
         # Handle mixed-type columns
 
-
     return df
 
 
 # Test the function with your DataFrame
-df = pd.read_csv('sample_data.csv')
-print("Data types before inference:")
-print(df.dtypes)
-
-df = infer_and_convert_data_types(df)
-
-print("\nData types after inference:")
-print(df.dtypes)
+# df = pd.read_csv('sample_data.csv')
+# print("Data types before inference:")
+# print(df.dtypes)
+#
+# df = infer_and_convert_data_types(df)
+#
+# print("\nData types after inference:")
+# print(df.dtypes)
 
 # %%

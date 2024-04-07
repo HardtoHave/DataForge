@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Backend.apps.AppConfig'
+    'Backend.apps.BackendConfig',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +53,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'DataForge.urls'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
