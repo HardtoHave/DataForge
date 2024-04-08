@@ -26,7 +26,6 @@ def infer_and_convert_data_types(df):
             df[col] = pd.Categorical(df[col])
             continue
 
-        # Handle mixed-type columns
 
     return df
 
