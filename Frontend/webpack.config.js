@@ -1,9 +1,9 @@
 const path = require('path');
 
 module.exports = {
-  entry: './Frontend/src/index.js',
+  entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, 'DataForge', 'static', 'frontend'),
+    path: path.resolve(__dirname, 'static', 'frontend'),
     filename: 'bundle.js',
   },
   module: {

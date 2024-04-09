@@ -1,43 +1,43 @@
 import pandas as pd
 
-
 def infer_and_convert_data_types(df):
-    """
-    Infer and convert datas type in a Pandas DataFrame
-    :param df:input dataframe to process
-    :return:pandas.dataframe: the dataframe with data types coverted
-    """
     for col in df.columns:
         # Attempt to convert to numeric first
-        try:
-            df[col] = pd.to_numeric(df[col], errors='coerce')
-        except(ValueError, TypeError):
-            pass
+        df_converted = pd.to_numeric(df[col], errors='coerce')
+        if not df_converted.isna().all():  # If at least one value is numeric
+            # Downcast numeric types if possible, prioritizing integers
+            df[col] = pd.to_numeric(df_converted, downcast='integer')
+            if df[col].dtype == 'float64':  # If still float, try downcasting to float32
+                df[col] = pd.to_numeric(df_converted, downcast='float')
+            continue
 
         # Attempt to convert to datetime
         try:
-            df[col] = pd.to_datetime(df[col], infer_datetime_format=True, errors='coerce')
+            df[col] = pd.to_datetime(df[col])
             continue
         except (ValueError, TypeError):
             pass
 
+        if set(df[col].dropna().unique()).issubset({True, False, 1, 0, 'True', 'False', '1', '0'}):
+            df[col] = df[col].astype('bool')
+            continue
+        try:
+            df[col] = df[col].apply(complex)
+            continue
+        except ValueError:
+            pass  # Not a complex number column
         # Check if the column should be categorical
         if len(df[col].unique()) / len(df[col]) < 0.5:  # Example threshold for categorization
             df[col] = pd.Categorical(df[col])
-            continue
-
 
     return df
 
-
 # Test the function with your DataFrame
-# df = pd.read_csv('sample_data.csv')
-# print("Data types before inference:")
-# print(df.dtypes)
-#
-# df = infer_and_convert_data_types(df)
-#
-# print("\nData types after inference:")
-# print(df.dtypes)
+df = pd.read_csv('data_files/sample_data.csv')
+print("Data types before inference:")
+print(df.dtypes)
 
-# %%
+df = infer_and_convert_data_types(df)
+
+print("\nData types after inference:")
+print(df.dtypes)
